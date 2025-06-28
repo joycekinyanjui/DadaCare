@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "121123685167",
+    "project_id": "tolstoy364",
+    "storage_bucket": "tolstoy364.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121123685167:android:6758c1a131dd4a3cc797da",
+        "android_client_info": {
+          "package_name": "com.example.dadacare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUMtbr8zJbXi28TXedzO-2oSM7cwZHUXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
