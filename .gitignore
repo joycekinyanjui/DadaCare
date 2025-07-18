@@ -45,4 +45,5 @@ app.*.map.json
 /android/app/release
 
 .env
+assets\dadacare-nx9c-d32b88dee3ce.json
 

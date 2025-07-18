@@ -7,6 +7,7 @@ plugins {
 }
 
 android {
+    
     namespace = "com.example.dadacare"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
@@ -29,6 +30,13 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        ndk {
+            abiFilters.addAll(listOf("armeabi-v7a", "arm64-v8a", "x86_64"))
+        }
+
+    }
+    packagingOptions {
+        pickFirst("lib/**/libtensorflowlite_c.so")
     }
 
     buildTypes {

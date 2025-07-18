@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+
 import '../service.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class NearbyHospitalsScreen extends StatefulWidget {
   const NearbyHospitalsScreen({super.key});
@@ -19,7 +18,6 @@ class _NearbyHospitalsScreenState extends State<NearbyHospitalsScreen>
   LatLng? _userLocation;
   Set<Marker> _markers = {};
   List<Map<String, dynamic>> _hospitals = [];
-  List<String> knownHospitalsWithPrices = []; // from Flask
   late AnimationController _animController;
 
   @override
@@ -44,29 +42,13 @@ class _NearbyHospitalsScreenState extends State<NearbyHospitalsScreen>
       await Geolocator.requestPermission();
     }
     Position pos = await Geolocator.getCurrentPosition(
+      // ignore: deprecated_member_use
       desiredAccuracy: LocationAccuracy.high,
     );
     setState(() {
       _userLocation = LatLng(pos.latitude, pos.longitude);
     });
-    await fetchKnownHospitals(); // get from Flask
     fetchNearby();
-  }
-
-  Future<void> fetchKnownHospitals() async {
-    try {
-      final response = await http.get(
-        Uri.parse("http://192.168.92.41:5000/hospitals"),
-      ); // adapt to emulator if needed
-      if (response.statusCode == 200) {
-        List<dynamic> data = json.decode(response.body);
-        setState(() {
-          knownHospitalsWithPrices = List<String>.from(data);
-        });
-      }
-    } catch (e) {
-      debugPrint("Error fetching from Flask: $e");
-    }
   }
 
   Future<void> fetchNearby() async {
@@ -103,30 +85,14 @@ class _NearbyHospitalsScreenState extends State<NearbyHospitalsScreen>
         'rating': rating,
       });
 
-      // check if in knownHospitalsWithPrices from Flask
-      bool hasPrices = knownHospitalsWithPrices.contains(name);
-
       loadedMarkers.add(
         Marker(
           markerId: MarkerId(place['place_id']),
           position: LatLng(lat, lng),
-          icon:
-              hasPrices
-                  ? BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueAzure,
-                  )
-                  : BitmapDescriptor.defaultMarkerWithHue(
-                    BitmapDescriptor.hueRed,
-                  ),
           infoWindow: InfoWindow(
             title: name,
             snippet:
                 "Distance: ${distanceInfo['distance']}, Time: ${distanceInfo['duration']}",
-            onTap: () {
-              if (hasPrices) {
-                // route to prices page (to do)
-              }
-            },
           ),
         ),
       );
@@ -155,7 +121,7 @@ class _NearbyHospitalsScreenState extends State<NearbyHospitalsScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text("Nearby Hospitals & Clinics"),
-        backgroundColor: const Color.fromARGB(255, 126, 169, 235),
+        backgroundColor: const Color.fromARGB(255, 128, 178, 235),
       ),
       body:
           _userLocation == null
@@ -186,9 +152,6 @@ class _NearbyHospitalsScreenState extends State<NearbyHospitalsScreen>
                           itemCount: _hospitals.length,
                           itemBuilder: (context, index) {
                             final hospital = _hospitals[index];
-                            bool hasPrices = knownHospitalsWithPrices.contains(
-                              hospital['name'],
-                            );
                             return FadeTransition(
                               opacity: _animController,
                               child: Card(
@@ -196,16 +159,15 @@ class _NearbyHospitalsScreenState extends State<NearbyHospitalsScreen>
                                   horizontal: 12,
                                   vertical: 6,
                                 ),
-                                color:
-                                    hasPrices ? Colors.blue[50] : Colors.white,
+                                color: Colors.white,
                                 elevation: 4,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                                 child: ListTile(
-                                  leading: Icon(
+                                  leading: const Icon(
                                     Icons.local_hospital,
-                                    color: hasPrices ? Colors.blue : Colors.red,
+                                    color: Color.fromARGB(255, 58, 102, 183),
                                   ),
                                   title: Text(
                                     hospital['name'],
@@ -230,18 +192,14 @@ class _NearbyHospitalsScreenState extends State<NearbyHospitalsScreen>
                                   ),
                                   trailing: const Icon(Icons.chevron_right),
                                   onTap: () {
-                                    if (hasPrices) {
-                                      // route to pricing page later
-                                    } else {
-                                      mapController.animateCamera(
-                                        CameraUpdate.newLatLng(
-                                          LatLng(
-                                            hospital['lat'],
-                                            hospital['lng'],
-                                          ),
+                                    mapController.animateCamera(
+                                      CameraUpdate.newLatLng(
+                                        LatLng(
+                                          hospital['lat'],
+                                          hospital['lng'],
                                         ),
-                                      );
-                                    }
+                                      ),
+                                    );
                                   },
                                 ),
                               ),

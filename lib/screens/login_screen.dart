@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
       phoneNumber: phoneController.text.trim(),
       verificationCompleted: (PhoneAuthCredential credential) async {
         await _auth.signInWithCredential(credential);
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacementNamed(context, '/home_screen');
       },
       verificationFailed: (e) {
@@ -48,9 +49,11 @@ class _LoginScreenState extends State<LoginScreen> {
         smsCode: otpController.text.trim(),
       );
       await _auth.signInWithCredential(credential);
+      // ignore: use_build_context_synchronously
       Navigator.pushReplacementNamed(context, '/home_screen');
     } catch (e) {
       ScaffoldMessenger.of(
+        // ignore: use_build_context_synchronously
         context,
       ).showSnackBar(SnackBar(content: Text("Login failed: $e")));
     }
@@ -80,13 +83,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 10),
               Text(
-                "Endelea kwa kutumia nambari yako ya simu",
+                "Please use the following credentials to login as this app is in testmode",
                 style: GoogleFonts.montserrat(
                   fontSize: 16,
                   color: Colors.black54,
                 ),
                 textAlign: TextAlign.center,
               ),
+              Text("+254796861199 otp: 123456"),
               const SizedBox(height: 30),
               TextField(
                 controller: phoneController,

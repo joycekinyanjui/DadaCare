@@ -80,11 +80,14 @@ class WelcomeScreen extends StatelessWidget {
                   const SizedBox(height: 15),
                   TextButton(
                     onPressed: () {
+                      Navigator.of(context).pushNamed('/doctor_login');
                       // You can implement Swahili toggle here
                     },
                     child: const Text(
-                      "Badilisha Lugha (Swahili)",
-                      style: TextStyle(color: Colors.white70),
+                      "Login as a doctor",
+                      style: TextStyle(
+                        color: Color.fromARGB(179, 14, 142, 216),
+                      ),
                     ),
                   ),
                 ],

@@ -1,3 +1,7 @@
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,11 +22,16 @@ class _HomeScreenState extends State<HomeScreen>
     "📍 Visit clinics with certified gynecologists.",
   ];
 
+  String? userId;
+  String? therapistId;
   int _currentTip = 0;
 
   @override
   void initState() {
     super.initState();
+    final user = FirebaseAuth.instance.currentUser;
+    userId = user?.uid;
+    therapistId = user?.uid;
     Future.delayed(const Duration(seconds: 4), rotateTip);
   }
 
@@ -38,25 +47,24 @@ class _HomeScreenState extends State<HomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 172, 207, 235),
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            actions: [Image.asset('assets/Doctor-pana.png')],
-            backgroundColor: const Color.fromARGB(255, 151, 197, 240),
-            expandedHeight: 80,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                'DadaCare',
-                style: GoogleFonts.montserrat(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              background: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Container(
+      body: Stack(
+        children: [
+          CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                actions: [Image.asset('assets/Doctor-pana.png')],
+                backgroundColor: const Color.fromARGB(255, 151, 197, 240),
+                expandedHeight: 80,
+                pinned: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  title: Text(
+                    'DadaCare',
+                    style: GoogleFonts.montserrat(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  background: Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
@@ -68,152 +76,225 @@ class _HomeScreenState extends State<HomeScreen>
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-
-          // Greeting
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Karibu, Dada 💕",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: const Color.fromARGB(255, 14, 93, 211),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    "Tuzuie saratani ya mlango wa kizazi kwa pamoja.",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 15,
-                      color: Colors.grey[800],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Health Tip
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color.fromARGB(
-                        255,
-                        41,
-                        12,
-                        21,
-                      ).withOpacity(0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
                 ),
-                padding: const EdgeInsets.all(16),
-                child: Center(
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 600),
-                    transitionBuilder:
-                        (child, animation) =>
-                            FadeTransition(opacity: animation, child: child),
-                    child: Text(
-                      tips[_currentTip],
-                      key: ValueKey<int>(_currentTip),
-                      style: GoogleFonts.montserrat(
-                        fontSize: 15,
-                        fontStyle: FontStyle.italic,
-                        color: const Color.fromARGB(255, 27, 93, 154),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Karibu, Dada 💕",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: const Color.fromARGB(255, 14, 93, 211),
+                        ),
                       ),
-                      textAlign: TextAlign.center,
+                      const SizedBox(height: 8),
+                      Text(
+                        "Tuzuie saratani ya mlango wa kizazi kwa pamoja.",
+                        style: GoogleFonts.montserrat(
+                          fontSize: 15,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(255, 41, 12, 21),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(16),
+                    child: Center(
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 600),
+                        transitionBuilder:
+                            (child, animation) => FadeTransition(
+                              opacity: animation,
+                              child: child,
+                            ),
+                        child: Text(
+                          tips[_currentTip],
+                          key: ValueKey<int>(_currentTip),
+                          style: GoogleFonts.montserrat(
+                            fontSize: 15,
+                            fontStyle: FontStyle.italic,
+                            color: const Color.fromARGB(255, 27, 93, 154),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-
-          // Scroll Down Hint
-          SliverToBoxAdapter(
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 16, bottom: 12),
-                child: _ScrollDownHint(),
+              SliverToBoxAdapter(
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 16, bottom: 12),
+                    child: _ScrollDownHint(),
+                  ),
+                ),
               ),
-            ),
-          ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    childAspectRatio: 1,
+                    children: [
+                      _AnimatedCard(
+                        icon: Icons.health_and_safety,
+                        label: "AI Reccomendations",
+                        color: const Color.fromARGB(255, 105, 6, 129),
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/risk');
+                        },
+                      ),
+                      _AnimatedCard(
+                        icon: Icons.local_hospital,
+                        label: "Clinics",
+                        color: const Color(0xff80cbc4),
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/hospitals');
+                        },
+                      ),
+                      _AnimatedCard(
+                        icon: Icons.monetization_on_outlined,
+                        label: "Pricing",
+                        color: const Color.fromARGB(255, 37, 192, 17),
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/price');
+                        },
+                      ),
+                      _AnimatedCard(
+                        icon: Icons.text_format,
+                        label: "Book Appointment",
+                        color: const Color(0xff616161),
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/book');
+                        },
+                      ),
+                      _AnimatedCard(
+                        icon: Icons.psychology_outlined,
+                        label: "Consult A Doctor",
+                        color: const Color.fromRGBO(171, 71, 188, 1),
+                        onTap: () async {
+                          if (therapistId == null) return;
 
-          // Grid Cards
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: GridView.count(
-                crossAxisCount: 2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                childAspectRatio: 1,
-                children: [
-                  _AnimatedCard(
-                    icon: Icons.health_and_safety,
-                    label: "Risk Check",
-                    color: const Color.fromARGB(255, 105, 6, 129),
-                    onTap: () {},
+                          final snapshot =
+                              await FirebaseDatabase.instance
+                                  .ref()
+                                  .child('therapists/$therapistId')
+                                  .get();
+
+                          if (snapshot.exists) {
+                            Navigator.pushNamed(
+                              context,
+                              '/therapist',
+                              arguments: {
+                                'userId': userId,
+                                'therapistId': therapistId,
+                              },
+                            );
+                          } else {
+                            Navigator.pushNamed(context, '/therapist');
+                          }
+                        },
+                      ),
+                    ],
                   ),
-                  _AnimatedCard(
-                    icon: Icons.chat_bubble_outline,
-                    label: "Chatbot",
-                    color: const Color.fromARGB(255, 95, 30, 214),
-                    onTap: () {},
-                  ),
-                  _AnimatedCard(
-                    icon: Icons.local_hospital,
-                    label: "Clinics",
-                    color: const Color(0xff80cbc4),
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/hospitals');
-                    },
-                  ),
-                  _AnimatedCard(
-                    icon: Icons.monetization_on_outlined,
-                    label: "Pricing",
-                    color: const Color.fromARGB(255, 37, 192, 17),
-                    onTap: () {},
-                  ),
-                  _AnimatedCard(
-                    icon: Icons.visibility_off,
-                    label: "Anonymous",
-                    color: const Color(0xff616161),
-                    onTap: () {},
-                  ),
-                ],
+                ),
               ),
+              const SliverToBoxAdapter(child: SizedBox(height: 150)),
+            ],
+          ),
+          Positioned(
+            bottom: 30,
+            right: 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        blurRadius: 6,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: const Text(
+                    "Talk to DadaCare Assistant",
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 102, 75, 155),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/chat');
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeInOut,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: const Color(0xffd1c4e9),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xff9575cd).withOpacity(0.6),
+                          blurRadius: 12,
+                          spreadRadius: 1,
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.chat_bubble_outline,
+                      color: Color(0xff512da8),
+                      size: 28,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-
-          const SliverToBoxAdapter(child: SizedBox(height: 30)),
         ],
       ),
     );
   }
 }
 
-// ─────────────────────────────────────────────────────────────
-// Reusable Animated Card
-// ─────────────────────────────────────────────────────────────
 class _AnimatedCard extends StatefulWidget {
   final IconData icon;
   final String label;
@@ -288,9 +369,6 @@ class _AnimatedCardState extends State<_AnimatedCard>
   }
 }
 
-// ─────────────────────────────────────────────────────────────
-// Scroll Down Hint Animation
-// ─────────────────────────────────────────────────────────────
 class _ScrollDownHint extends StatefulWidget {
   @override
   State<_ScrollDownHint> createState() => _ScrollDownHintState();

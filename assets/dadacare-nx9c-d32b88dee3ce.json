@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "dadacare-nx9c",
+  "private_key_id": "d32b88dee3ce2404ba2fbe5c8f910b91989cc897",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDfbfFlRC/FrWe8\nEF4MEOiMdCpXYhqHwA4KwunyIzWh5FvSBMOfU/GHE5IN5Auuipc/sRKJhg80mV4u\nwfGkFgghysQi85WtEsIvW0K8cHhY4nYgxmc6m/WZMK0dOmJmqxenJEJ+wRsWuoTR\nrXMVKlANqGLU4g0SKkfnRI+mpsR9Dj4M/0OaMoqUnhsXXL6Uzh0iZv7xXXMlkwCl\nseWUaWDl+a2SLI+/ShTkvVqK1K1d+3vbLXbZL/oeIADg3fqL5wKz4tZeJPca/MLW\ne5NLoK7ceskjBP1ck0Z0M+NDc2sLzqcIsKj3Nf9/gt5PWkKFqKs0qo7Hb7JPGWUE\niDZPZJHXAgMBAAECggEAVJSwuPa2pP0vk3SYvbWa6yzAqKLVS0WLq0w9NvJYR8iE\nb/1otsSW3t0sQcDuIS2K80wLqe8Li4xxqH64BLdoba5uUJLouwOqajYAjgh/rppQ\nQLkK9Bd9Qng4WKO1A4vKYPYrjAN7Rz/lruCb+8uwUXNIsrE+ZH2ICccdIGfqYzJP\nE3i25YfAd3U6fMLMkmNGmTPLu/AYGFBpP21syImTCYFY6LzHpvUNhjBLtF/1EE4b\nSHUKMVq7P7aOnoJHb1Q7YFs45PuiZij+1ovD6rXWM/wbuvhifJC7iZzaS6z4+72g\nOOyC7MXJPR6FLLIMa0QVD/4oZo39yOSb0+POJYmf3QKBgQD/2dl+Obd4XImB9RD9\njXQZQGnGfO93ss5HRRXj93lQa8J8BvqtHseIqQ3IQRVVoge0Irmem03PllfEoYNA\nkWXrJgK15HhTqx+cypVBNWJdmBJxd1NV7ByLJDM68eDwYE8b3YL/Gdhfg+S3JPj9\n5oCsVluT9ZmXCzLqMloDZquQJQKBgQDfj0JJs0/fTLSUKRZ4aNFa+4dh6FCS4/6k\nVuCM/1kU2LWqKESqkuHQkNZFxhCJFI/NU/oJcnvDVEdbfyvG/TyqxOdaO1A90jzS\nrTxLvGwcxzgB/oqBcQTMKMWz9S/OP6RB98Ib308A2Zg3fMWa7wxWmLpMvLB/K9/e\nUDCvbkTLSwKBgQDjcDKCniY17fUjPMqMy3lglT0ygI+UFbR/8K8kBzOlxRWPkdi3\nmvv/xWCGGy0vAandfV0K3L5QAjMljfqSpG44moKgVWiN4Dpq9D+4Rw+Zaf1DNrMz\nV4CMRHLyPGEc7lCE0eaIhd4uEp54HHrnokfSa7ZfEl4lwoPRY09XZKawrQKBgDOx\nepB0J/noULEZtxpskkxJcQqQn2D32z/A3vd7a+vIGGmaGhafFBwYAZPsspIf8Qh3\nbI+Wq0uFR2K+yy6eC9Mo6J4SrQE+hdXpPNH+ZblZz3eWlgxMR+G1Y9Gy1jUIvkCK\nu5WaUzhNGEdsUHz83YuAkUOBNgaR7JgJTtih1MJ1AoGBAO3KPnlgAWBirM8Mat0N\nneDpCU9Of3Me0BrkP8/XwLKU0EPFqEV4wuj1EfDPVoiGs7/4EmxE1z+JVhMkuYKh\nl1DNQAoGxitiUaluqwF1ZQUI60V+022lVzZLeqhs1JF1BNPROB6pjaUnOKWAX2hi\nCH9a43XZ/9TB4/ab4NOEos0N\n-----END PRIVATE KEY-----\n",
+  "client_email": "dada-736@dadacare-nx9c.iam.gserviceaccount.com",
+  "client_id": "106481821268287171617",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dada-736%40dadacare-nx9c.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
